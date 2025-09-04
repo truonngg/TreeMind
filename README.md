@@ -1,4 +1,4 @@
-reak in thtrajec# TreeMind - AI-Powered Journaling Companion
+## TreeMind - AI-Powered Journaling Companion
 
 A private, empathetic, and intelligent journaling companion that makes self-reflection a seamless and insightful daily habit. Built with Next.js 14, TypeScript, and a privacy-first architecture that keeps your thoughts secure on your device.
 
@@ -385,7 +385,7 @@ The application can be deployed to:
 - **Mobile Optimization**: Current implementation is web-first; mobile-specific optimizations may be needed
 - **AI Outputs**: Find a way to balance personalized outputs and privacy. 
 - **Storage**: Find a way to redact/encrypt entries such that privacy doesn't impede scaling. 
--**UI/UX**: Create a welcoming experience (cleaner, clearer look). Plant should one, ongoing visual as a main focal point of the app. 
+- **UI/UX**: Create a welcoming experience (cleaner, clearer look). Plant should one, ongoing visual as a main focal point of the app. 
 
 ## 📝 License
 
