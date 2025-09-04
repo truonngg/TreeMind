@@ -8,7 +8,8 @@ export function getThemes(text: string): string[] {
     'creativity': ['art', 'music', 'writing', 'design', 'creative', 'inspiration'],
     'learning': ['study', 'learn', 'education', 'knowledge', 'skill', 'course'],
     'relationships': ['friend', 'relationship', 'love', 'dating', 'partner', 'social'],
-    'technology': ['tech', 'computer', 'software', 'digital', 'online', 'app']
+    'technology': ['tech', 'computer', 'software', 'digital', 'online', 'app'],
+    'money': ['money', 'financial', 'budget', 'income', 'expense', 'investment', 'savings', 'debt', 'payment', 'cost', 'price', 'expensive', 'cheap', 'afford', 'spend', 'earn', 'salary', 'rent', 'bills']
   };
   
   const words = text.toLowerCase().split(/\s+/);

@@ -196,15 +196,13 @@ export default function LibraryPage() {
 
                     <div className="flex gap-2 pt-2">
                       <Button asChild variant="outline" size="sm" className="flex-1 rounded-xl border-emerald-200 text-emerald-700 hover:bg-emerald-50 bg-transparent">
-                        {/* TODO: wire to /entry/[id] later */}
-                        <Link href={`/create`}>
+                        <Link href={`/entry/${e.id}`}>
                           <Eye className="w-4 h-4 mr-2" />
                           View
                         </Link>
                       </Button>
                       <Button asChild variant="ghost" size="sm" className="flex-1 rounded-xl text-gray-600 hover:bg-gray-100">
-                        {/* TODO: wire to /entry/[id]/edit later */}
-                        <Link href={`/create`}>
+                        <Link href={`/entry/${e.id}/edit`}>
                           <Edit className="w-4 h-4 mr-2" />
                           Edit
                         </Link>
