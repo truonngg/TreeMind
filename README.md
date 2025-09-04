@@ -1,4 +1,4 @@
-##TreeMind - AI-Powered Journaling Companion
+## TreeMind - AI-Powered Journaling Companion
 
 A private, empathetic, and intelligent journaling companion that makes self-reflection a seamless and insightful daily habit. Built with Next.js 14, TypeScript, and a privacy-first architecture that keeps your thoughts secure on your device.
 
