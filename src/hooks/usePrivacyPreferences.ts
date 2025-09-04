@@ -6,11 +6,15 @@ export type PrivacyMode = 'private' | 'gemini';
 
 interface PrivacyPreferences {
   titleGenerationMode: PrivacyMode;
+  weeklyInsightsMode: PrivacyMode;
+  monthlyInsightsMode: PrivacyMode;
   analyticsEnabled: boolean;
 }
 
 const DEFAULT_PREFERENCES: PrivacyPreferences = {
   titleGenerationMode: 'private',
+  weeklyInsightsMode: 'private',
+  monthlyInsightsMode: 'private',
   analyticsEnabled: false,
 };
 
@@ -48,6 +52,14 @@ export function usePrivacyPreferences() {
     setPreferences(prev => ({ ...prev, titleGenerationMode: mode }));
   };
 
+  const updateWeeklyInsightsMode = (mode: PrivacyMode) => {
+    setPreferences(prev => ({ ...prev, weeklyInsightsMode: mode }));
+  };
+
+  const updateMonthlyInsightsMode = (mode: PrivacyMode) => {
+    setPreferences(prev => ({ ...prev, monthlyInsightsMode: mode }));
+  };
+
   const updateAnalyticsEnabled = (enabled: boolean) => {
     setPreferences(prev => ({ ...prev, analyticsEnabled: enabled }));
   };
@@ -60,6 +72,8 @@ export function usePrivacyPreferences() {
     preferences,
     isLoaded,
     updateTitleGenerationMode,
+    updateWeeklyInsightsMode,
+    updateMonthlyInsightsMode,
     updateAnalyticsEnabled,
     resetToDefaults,
   };

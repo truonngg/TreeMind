@@ -4,11 +4,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Mic, Save, Sparkles, X, MicOff, Shield, Brain } from "lucide-react";
+import { ArrowLeft, Mic, Save, Sparkles, X, MicOff, Shield, Brain, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { createEntry } from "@/lib/storage/entries";
 import { useVoiceRecording } from "@/hooks/useVoiceRecording";
 import { usePrivacyPreferences } from "@/hooks/usePrivacyPreferences";
@@ -108,7 +109,7 @@ export default function CreateEntryFormV0() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 p-4 pb-20">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center gap-4">
@@ -203,6 +204,25 @@ export default function CreateEntryFormV0() {
                 </label>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-gray-500">Privacy Mode:</span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          aria-label="Privacy info"
+                          className="w-4 h-4 text-gray-500 hover:text-gray-700 text-sm font-medium rounded-full border border-gray-300 flex items-center justify-center"
+                        >
+                          <Info className="w-2.5 h-2.5" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-sm max-w-xs">
+                          <strong>Private Mode:</strong> All analysis happens locally on your device.<br/>
+                          <strong>AI Enhanced Mode:</strong> Uses Google Gemini with anonymized data only.<br/>
+                          Your actual journal data is stored locally and never leaves your device.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   <div className="flex bg-gray-100 rounded-lg p-1">
                     <Button
                       onClick={() => updateTitleGenerationMode('private')}
@@ -229,8 +249,8 @@ export default function CreateEntryFormV0() {
                       }`}
                       title="AI-powered contextual titles using Google Gemini (free)"
                     >
-                      <Brain className="w-3 h-3 mr-1" />
-                      Gemini
+                      <Sparkles className="w-3 h-3 mr-1" />
+                      AI Enhanced
                     </Button>
                   </div>
                 </div>
@@ -266,7 +286,7 @@ export default function CreateEntryFormV0() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <p className="text-sm text-emerald-700 font-medium">
-                        Suggested title ({suggestedTitles[0]?.mode === 'gemini' ? 'Gemini AI' : suggestedTitles[0]?.mode} mode):
+                        Suggested title ({suggestedTitles[0]?.mode === 'gemini' ? 'AI Enhanced' : suggestedTitles[0]?.mode} mode):
                       </p>
                       <Button 
                         onClick={() => setShowSuggestions(false)} 
@@ -284,7 +304,7 @@ export default function CreateEntryFormV0() {
                           <div className="flex-1">
                             <p className="text-emerald-800 font-medium text-lg">{suggestion.title}</p>
                             <p className="text-xs text-emerald-600">
-                              {suggestion.mode === 'gemini' ? 'Gemini AI' : suggestion.mode} mode
+                              {suggestion.mode === 'gemini' ? 'AI Enhanced' : suggestion.mode} mode
                             </p>
                           </div>
                           <Button 

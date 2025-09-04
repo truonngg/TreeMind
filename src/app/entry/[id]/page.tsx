@@ -118,7 +118,7 @@ export default function EntryViewPage() {
             <Button asChild variant="ghost" size="sm" className="text-emerald-700 hover:bg-emerald-100 rounded-2xl">
               <Link href="/library">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Library
+                Back to Journals
               </Link>
             </Button>
           </div>
@@ -134,7 +134,7 @@ export default function EntryViewPage() {
               </p>
               <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl">
                 <Link href="/library">
-                  Back to Library
+                  Back to Journals
                 </Link>
               </Button>
             </CardContent>
@@ -156,7 +156,7 @@ export default function EntryViewPage() {
             <Button asChild variant="ghost" size="sm" className="text-emerald-700 hover:bg-emerald-100 rounded-2xl">
               <Link href="/library">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Library
+                Back to Journals
               </Link>
             </Button>
             <h1 className="text-2xl font-semibold text-gray-900">Entry Details</h1>

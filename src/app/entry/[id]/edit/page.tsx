@@ -143,7 +143,7 @@ export default function EditEntryPage() {
             <Button asChild variant="ghost" size="sm" className="text-emerald-700 hover:bg-emerald-100 rounded-2xl">
               <Link href="/library">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Library
+                Back to Journals
               </Link>
             </Button>
           </div>
@@ -159,7 +159,7 @@ export default function EditEntryPage() {
               </p>
               <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl">
                 <Link href="/library">
-                  Back to Library
+                  Back to Journals
                 </Link>
               </Button>
             </CardContent>

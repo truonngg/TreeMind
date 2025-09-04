@@ -2,19 +2,27 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Search, Plus, RotateCcw, Eye, Edit } from "lucide-react";
+import { Search, Plus, RotateCcw, Eye, Edit, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { listEntries, type Entry } from "@/lib/storage/entries";
+import { listEntries, type Entry, createSampleEntriesWithDifferentDates } from "@/lib/storage/entries";
+import { STORE } from "@/lib/storage/entries";
 
 // ---- helpers ----
 const toTitle = (s?: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
 const fmtDate = (ts: number) =>
   new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+
+const fmtDateWithDay = (ts: number) => {
+  const date = new Date(ts);
+  const dayOfWeek = date.toLocaleDateString(undefined, { weekday: "short" });
+  const dateStr = date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  return `${dayOfWeek}, ${dateStr}`;
+};
 
 const sentimentClass: Record<"positive" | "neutral" | "negative", string> = {
   positive: "bg-emerald-100 text-emerald-700 border-emerald-200",
@@ -29,9 +37,10 @@ const themeClass: Record<string, string> = {
   creativity: "bg-orange-100 text-orange-700 border-orange-200",
   school: "bg-indigo-100 text-indigo-700 border-indigo-200",
   money: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  family: "bg-yellow-100 text-yellow-700 border-yellow-200",
 };
 
-export default function LibraryPage() {
+export default function JournalsPage() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
@@ -41,6 +50,32 @@ export default function LibraryPage() {
   useEffect(() => {
     listEntries().then(setEntries).catch(console.error);
   }, []);
+
+
+  const handleCreateSampleEntries = async () => {
+    try {
+      await createSampleEntriesWithDifferentDates();
+      // Refresh the entries after creation
+      const updatedEntries = await listEntries();
+      setEntries(updatedEntries);
+      console.log('✅ Sample entries have been created!');
+    } catch (error) {
+      console.error('❌ Error creating sample entries:', error);
+    }
+  };
+
+  const handleClearAllEntries = async () => {
+    if (confirm('Are you sure you want to clear all entries? This action cannot be undone.')) {
+      try {
+        // Clear all entries from storage
+        await STORE.setItem("all", []);
+        setEntries([]);
+        console.log('✅ All entries have been cleared!');
+      } catch (error) {
+        console.error('❌ Error clearing entries:', error);
+      }
+    }
+  };
 
   const filtered = useMemo(() => {
     let list = [...entries];
@@ -78,12 +113,12 @@ export default function LibraryPage() {
     sortBy !== "newest" || sentimentFilter !== "all" || themeFilter !== "all" || searchQuery !== "";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 p-4 pb-20">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1">
-            <h1 className="text-3xl font-semibold text-gray-900">Your Library</h1>
+            <h1 className="text-3xl font-semibold text-gray-900">Your Journals</h1>
             <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-200 text-xs">
               Private Mode is on — your writing stays on your device
             </Badge>
@@ -104,6 +139,22 @@ export default function LibraryPage() {
                 <Plus className="w-4 h-4 mr-2" />
                 New Entry
               </Link>
+            </Button>
+            <Button 
+              onClick={handleCreateSampleEntries}
+              className="bg-purple-600 hover:bg-purple-700 text-white rounded-2xl"
+              disabled={entries.length > 0}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Create Sample Entries
+            </Button>
+            <Button 
+              onClick={handleClearAllEntries}
+              className="bg-red-600 hover:bg-red-700 text-white rounded-2xl"
+              disabled={entries.length === 0}
+            >
+              <X className="w-4 h-4 mr-2" />
+              Clear All Entries
             </Button>
           </div>
         </div>
@@ -165,7 +216,7 @@ export default function LibraryPage() {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filtered.map((e) => {
-              const date = fmtDate(e.createdAt);
+              const date = fmtDateWithDay(e.createdAt);
               const title = e.title?.trim() || "Untitled Entry";
               const preview = (e.text || "").slice(0, 220);
               const label = (e.sentiment?.label || "neutral") as "positive" | "neutral" | "negative";
@@ -201,7 +252,7 @@ export default function LibraryPage() {
                           View
                         </Link>
                       </Button>
-                      <Button asChild variant="ghost" size="sm" className="flex-1 rounded-xl text-gray-600 hover:bg-gray-100">
+                      <Button asChild variant="outline" size="sm" className="flex-1 rounded-xl border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent">
                         <Link href={`/entry/${e.id}/edit`}>
                           <Edit className="w-4 h-4 mr-2" />
                           Edit
